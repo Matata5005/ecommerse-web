@@ -5,6 +5,7 @@ import json
 import datetime
 
 
+
 def store(request):
     print('user', request)
     if request.user.is_authenticated:
@@ -87,16 +88,18 @@ def updateItem(request):
         orderItem.delete()
     return JsonResponse('Item was added', safe=False)
 
-from django.views.decorators.csrf import csrf_exempt  
+#from django.views.decorators.csrf import csrf_exempt  
 
-@csrf_exempt
+#@csrf_exempt
 def processOrder(request):
+    #print('Data:', request.body)
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)
 
+
     if request.user.is_authenticated:
         customer = request.user.customer
-        order = Order.objects.get_or_create(customer=customer, complete=False)
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
         total = float(data['form']['total'])
         order.transaction_id = transaction_id
 
@@ -107,12 +110,13 @@ def processOrder(request):
 
         if order.shipping == True:
             ShippingAddress.objects.create(
-            customer = customer,
-            order = order,
-            address = data['shipping']['address'],
-            city  = data['shipping']['city'],
-            county  = data['shipping']['county'],
-            mtaa = data['shipping']['mtaa'],)
+                    customer = customer,
+                    order = order,
+                    address = data['shipping']['address'],
+                    city  = data['shipping']['city'],
+                    county  = data['shipping']['county'],
+                    mtaa = data['shipping']['mtaa'],
+                    )
 
 
     else:
