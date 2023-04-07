@@ -20,7 +20,7 @@ for(var i = 0; i < updateBtns.length; i++) {
 function addCookieItem(productId, action){
     console.log('Not logged in..')
     if (action == 'add'){
-        if (cart[productId == undefined]){
+        if (cart[productId] == undefined){
             cart[productId] = {'quantity':1}
         }else{
             cart[productId]['quantity'] += 1
@@ -34,7 +34,13 @@ function addCookieItem(productId, action){
             delete cart[productId];
         }
     }
+    console.log('Cart:', cart)
+    document.cookie = 'cart=' + JSON.stringify(cart) + ";dormain=;path=/"
+    document.getElementById("cart-total").innerHTML = Object.keys(cart).length
+    location.reload()
 }
+
+document.getElementById("cart-total").innerHTML = Object.keys(cart).length
 
 function updateUserOrder(productId, action){
     console.log('User is logged in, sending data to the server...')

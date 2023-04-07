@@ -10,7 +10,7 @@
 	<script type ="text/javascript">
 	    var user = '{{request.user}}'
 		console.log(user)
-	function getToken(name) {
+	    function getToken(name) {
         var cookieValue = null;
         if (document.cookie && document.cookie !== '') {
             var cookies = document.cookie.split(';');
@@ -18,8 +18,7 @@
                 var cookie = cookies[i].trim();
                 // Does this cookie string begin with the name we want?
                 if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(
-						name.length + 1));
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                     break;
                 }
             }
@@ -36,7 +35,8 @@
 		for(var i = 0; i < cookieArr.length; i++){
 			var cookiePair = cookieArr[i].split("=");
 
-			/* Removing whitespace at the beginning of the cookie name and compare it with the given string */
+		/* Removing whitespace at the beginning of the cookie name and compare
+		it with the given string */
             if(name == cookiePair[0].trim()){
 				// Decode the cookie value and return
 				return decodeURIComponent(cookiePair[1]);
@@ -46,6 +46,9 @@
 		//Return null if not found
 		return null;
 	}
+
+
+
     var cart = JSON.parse(getCookie('cart'))
 
 
